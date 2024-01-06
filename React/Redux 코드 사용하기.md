@@ -11,31 +11,31 @@
 - payload: action에 필요한 추가 데이터
 
 ### 1. action creator 함수 작성하기
-
+-  
     ```jsx
     // modules/todos.js
     import { createAction } from "redux-actions";
-
+    
     const CHANGE_INPUT = "todos/CHANGE_INPUT";
     const INSERT = "todos/INSERT";
     const TOGGLE = "todos/TOGGLE";
     const REMOVE = "todos/REMOVE";
-
+    
     export const chagneInput = createAction(CHAGNE_INPUT, (input) => input);
-
+    
     let id = 1;
     export const insert = createAction(INSERT, (text) => ({
     id: id++,
     text,
     done: false,
     }));
-
+    
     export const toggle = createAction(TOGGLE, (id) => id);
     export const remove = createAction(REMOVE, (id) => id);
     ```
 
 ### 2. reducer 작성하기
-
+- 
     ```jsx
     //modules/todos.js
     import { createActions, handleActions } from 'redux-actions';
