@@ -1,19 +1,13 @@
----
-sticker: emoji//1f332
-tags:
-  - main
-  - redux
----
-# 🌱1. [[Redux 기본 개념|Redux]] 만들기
+# 🌱 1. Redux 만들기
 ### 작성 해야 하는 코드
-- [[action#^6e763e|Action Type]]
-- [[action#^631203|Action Creator]]
-- [[reducer]]
+- Action Type
+- Action Creator
+- reducer
 ### 코드 분류 방법
 1. 각각 기능에 따라 다른 파일에 작성하기
-2. 기능별로 묶어 하나의 파일에 작성하기(**[[Ducks 패턴]]**)
+2. 기능별로 묶어 하나의 파일에 작성하기(**[Ducks 패턴](./Ducks%20패턴.md)**)
 ### ✏️ 코드 작성 예시(Ducks 패턴, todoList)
-1. [[Container 컴포넌트와 Presentational 컴포넌트|Presentational 컴포넌트 만들기]]
+1. [Presentational 컴포넌트 만들기](./Container%20컴포넌트와%20Presentational%20컴포넌트.md)
 	```jsx
 	//App.jsx
 	import Todos from './components/Todos';
@@ -86,7 +80,7 @@ tags:
 	
 	export default Counter;
 	```
-2. [[Ducks 패턴#^dae004|모듈]] 작성하기
+2. [모듈](./Duck%20패턴.md) 작성하기
 	1. action type
 		```jsx
 		// modules/todos.jsx
@@ -224,13 +218,13 @@ tags:
 	</Provider>
 	);
 	```
-# 🍀 3. [[Container 컴포넌트와 Presentational 컴포넌트|Container 컴포넌트]] 만들기
+# 🍀 3. [Container 컴포넌트](./Container%20컴포넌트와%20Presentational%20컴포넌트.md) 만들기
 ### 작업 방법
 1. 해당 container 만들기
 2. App 컴포넌트에 container 컴포넌트 연결하기
 ### ✏️ 코드 작성 예시(todoList 이어서)
 1. container 파일 만들기
-	- **[[connect 함수]]** 사용
+	- **[connect 함수](./connect%20함.md)** 사용
 	```jsx
 	// containers/TodosContainer.js
 	import { connect } from 'react-redux';
@@ -265,78 +259,77 @@ tags:
 
 	```
 2. App 컴포넌트에 container 컴포넌트 추가하기
-```jsx
-// App.js
-import CounterContainer from './containers/CounterContainer';
-import TodosContainer from './containers/TodosContainer';
-
-const App = () => {
-	return (
-		<div>
-			<TodosContainer />
-			<hr />
-			<CounterContainer />
-		</div>
-		);
-}
-
-export default App;
-```
-3. Presentational 컴포넌트 수정하기
-```jsx
-// components/Todos.js
-
-const TodoItem = ({ todo, onToggle, onRemove }) => {
-	return (
-		<div>
-			<input 
-				type="checkbox"
-				onClick={() => onToggle(todo.id)}
-				checked={todo.done}
-				readOnly={true}
-			/>
-			<span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>
-				{todo.text}
-			</span>
-			<button onClick={() => onRemove(todo.id)}>삭제</button>
-		</div>
-		);
-	};
+	```jsx
+	// App.js
+	import CounterContainer from './containers/CounterContainer';
+	import TodosContainer from './containers/TodosContainer';
 	
-	const Todos = ({
-		input,
-		todos,
-		onChangeInput,
-		onInsert,
-		onToggle,
-		onRemove,
-	}) => {
-		const onSubmit = e => {
-			e.preventDefault();
-			onInsert(input);
-			onChagneInput('');
-		};
-		const onChange = e => onChagneInput(e.target.value);
-		
+	const App = () => {
 		return (
 			<div>
-				<form onSubmit={onSubmit}>
-					<input value={input} onChange={onChange} />
-					<button type="submit">등록</button>
-				</form>
-				<div>
-					{todos.map(todo => (
-						<TodoItem
-							todo={todo}
-							key={todo.id}
-							onToggle={onToggle}
-							onRemove={onRemove}
-						/>
-					))}
-				</div>
+				<TodosContainer />
+				<hr />
+				<CounterContainer />
 			</div>
-		);
-	};
+			);
+	}
 	
-	export default Todos;
-```
+	export default App;
+	```
+3. Presentational 컴포넌트 수정하기
+	```jsx
+	// components/Todos.js
+	const TodoItem = ({ todo, onToggle, onRemove }) => {
+		return (
+			<div>
+				<input 
+					type="checkbox"
+					onClick={() => onToggle(todo.id)}
+					checked={todo.done}
+					readOnly={true}
+				/>
+				<span style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>
+					{todo.text}
+				</span>
+				<button onClick={() => onRemove(todo.id)}>삭제</button>
+			</div>
+			);
+		};
+		
+		const Todos = ({
+			input,
+			todos,
+			onChangeInput,
+			onInsert,
+			onToggle,
+			onRemove,
+		}) => {
+			const onSubmit = e => {
+				e.preventDefault();
+				onInsert(input);
+				onChagneInput('');
+			};
+			const onChange = e => onChagneInput(e.target.value);
+			
+			return (
+				<div>
+					<form onSubmit={onSubmit}>
+						<input value={input} onChange={onChange} />
+						<button type="submit">등록</button>
+					</form>
+					<div>
+						{todos.map(todo => (
+							<TodoItem
+								todo={todo}
+								key={todo.id}
+								onToggle={onToggle}
+								onRemove={onRemove}
+							/>
+						))}
+					</div>
+				</div>
+			);
+		};
+		
+		export default Todos;
+	```
