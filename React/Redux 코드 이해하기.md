@@ -80,7 +80,7 @@
 	
 	export default Counter;
 	```
-2. [모듈](./Duck%20패턴.md) 작성하기
+2. [모듈](./Ducks%20패턴.md) 작성하기
 	1. action type
 		```jsx
 		// modules/todos.jsx
